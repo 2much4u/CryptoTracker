@@ -26,7 +26,7 @@ public class NewsActivity extends AppCompatActivity {
                 float deltaX = touchX2 - touchX1;
                 if (Math.abs(deltaX) > minSwipeDistance) {
                     Bundle bundle = new Bundle();
-                    startActivity(new Intent(NewsActivity.this, MainActivity.class), );
+                    startActivity(new Intent(NewsActivity.this, MainActivity.class));
                 }
                 break;
         }
