@@ -2,7 +2,6 @@ package finalproject.cryptotracker;
 
 public class CoinItem {
     private String ticker;
-    private int pictureID;
     private String currentPrice;
     private String percentChange;
 
@@ -10,17 +9,10 @@ public class CoinItem {
         this.ticker = ticker;
         this.currentPrice = currentPrice;
         this.percentChange = percentChange;
-
-        // Match ticker with drawableID
-        this.pictureID = R.mipmap.ic_launcher;
     }
 
     public String getTicker() {
         return ticker;
-    }
-
-    public int getPictureID() {
-        return pictureID;
     }
 
     public void setTicker(String ticker) {

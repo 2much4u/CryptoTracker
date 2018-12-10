@@ -83,27 +83,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void aggregateCoins() {
-        aggregateCoin("BTC");
-        aggregateCoin("XRP");
-        aggregateCoin("ETH");
-        aggregateCoin("XLM");
-        aggregateCoin("MITH");
-        aggregateCoin("USDT");
-        aggregateCoin("BCH");
-        aggregateCoin("EOS");
-        aggregateCoin("LTC");
-        aggregateCoin("XMR");
-        aggregateCoin("DEX");
-    }
+        final String tickers = "ADA,BAT,BCD,BCH,BCN,BNB,BSV,BTC,BTG,DASH,DCR,DGB,DOGE,EOS,ETC,ETH,FCT,ICX,IOTA,LSK,LTC,MKR,NANO,NEO,OMG,ONT,PAX,QTUM,TRX,TUSD,USDC,USDT,VET,WAVES,XEM,XLM,XMR,XRP,XTZ,ZEC,ZIL,ZRX";
 
-    private void aggregateCoin(final String ticker) {
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "https://min-api.cryptocompare.com/data/pricemultifull?fsyms=" + ticker + "&tsyms=USD&api_key=6db320aa389652ff3c1fe760b03851b1861a7fe89d028f1a29a262fcb8fe2675";
+        String url = "https://min-api.cryptocompare.com/data/pricemultifull?fsyms=" + tickers + "&tsyms=USD&api_key=6db320aa389652ff3c1fe760b03851b1861a7fe89d028f1a29a262fcb8fe2675";
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                parseCoinData(ticker, response);
+                parseCoinData(tickers.split(","), response);
                 drawCoinsUI();
             }
         }, new Response.ErrorListener() {
@@ -116,16 +104,18 @@ public class MainActivity extends AppCompatActivity {
         queue.add(stringRequest);
     }
 
-    private void parseCoinData(String ticker, String response) {
+    private void parseCoinData(String[] tickers, String response) {
         JSONParser parser = new JSONParser();
         try {
             JSONObject coinData = (JSONObject) parser.parse(response);
             JSONObject display = (JSONObject) coinData.get("DISPLAY");
-            JSONObject tickerData = (JSONObject) display.get(ticker);
-            JSONObject usd = (JSONObject) tickerData.get("USD");
-            String price = ((String) usd.get("PRICE")).replaceAll(" ", "");
-            String percentChange = ((String) usd.get("CHANGEPCT24HOUR")) + "%";
-            coins.add(new CoinItem(ticker, price, percentChange));
+            for (String ticker : tickers) {
+                JSONObject tickerData = (JSONObject) display.get(ticker);
+                JSONObject usd = (JSONObject) tickerData.get("USD");
+                String price = ((String) usd.get("PRICE")).replaceAll(" ", "");
+                String percentChange = ((String) usd.get("CHANGEPCT24HOUR")) + "%";
+                coins.add(new CoinItem(ticker, price, percentChange));
+            }
         } catch (Exception e) {
             setBackgroundText("Failed to parse coin data!");
         }
