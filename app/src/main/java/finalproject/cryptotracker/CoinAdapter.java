@@ -1,6 +1,7 @@
 package finalproject.cryptotracker;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -30,10 +31,14 @@ public class CoinAdapter extends RecyclerView.Adapter<CoinAdapter.viewHolder> {
     @Override
     public void onBindViewHolder(viewHolder holder, int position) {
         CoinItem coin = coins.get(position);
-        holder.coinPicture.setImageResource(coin.getPictureID());
         holder.coinTicker.setText(coin.getTicker());
         holder.coinValue.setText(coin.getCurrentPrice());
         holder.percentChange.setText(coin.getPercentChange());
+
+        Resources resources = context.getResources();
+        int resource = resources.getIdentifier(coin.getTicker().toLowerCase(), "drawable",
+                context.getPackageName());
+        holder.coinPicture.setImageResource(resource);
 
         int color = Color.GREEN;
         if (coin.getPercentChange().contains("-")) {
