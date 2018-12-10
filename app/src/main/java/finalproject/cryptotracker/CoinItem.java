@@ -3,10 +3,10 @@ package finalproject.cryptotracker;
 public class CoinItem {
     private String ticker;
     private int pictureID;
-    private double currentPrice;
+    private String currentPrice;
     private String percentChange;
 
-    public CoinItem(String ticker, double currentPrice, String percentChange) {
+    public CoinItem(String ticker, String currentPrice, String percentChange) {
         this.ticker = ticker;
         this.currentPrice = currentPrice;
         this.percentChange = percentChange;
@@ -27,11 +27,11 @@ public class CoinItem {
         this.ticker = ticker;
     }
 
-    public double getCurrentPrice() {
+    public String getCurrentPrice() {
         return currentPrice;
     }
 
-    public void setCurrentPrice(double currentPrice) {
+    public void setCurrentPrice(String currentPrice) {
         this.currentPrice = currentPrice;
     }
 

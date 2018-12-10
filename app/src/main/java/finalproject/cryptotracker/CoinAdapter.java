@@ -31,7 +31,7 @@ public class CoinAdapter extends RecyclerView.Adapter<CoinAdapter.viewHolder> {
         CoinItem coin = coins.get(position);
         holder.coinPicture.setImageResource(coin.getPictureID());
         holder.coinTicker.setText(coin.getTicker());
-        holder.coinValue.setText(String.format("$%.2f", coin.getCurrentPrice()));
+        holder.coinValue.setText(coin.getCurrentPrice());
         holder.percentChange.setText(coin.getPercentChange());
     }
 

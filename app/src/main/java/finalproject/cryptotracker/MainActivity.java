@@ -7,15 +7,27 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.TextView;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.simple.parser.JSONParser;
+import org.json.simple.JSONObject;
+
 import java.util.List;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private float touchX1,touchX2;
     private final int minSwipeDistance = 500;
+    private List<CoinItem> coins;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,13 +39,10 @@ public class MainActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
 
-        RecyclerView recyclerView = findViewById(R.id.coinRecycler);
-        List<CoinItem> coins = new ArrayList<>();
-        // Aggregate coins here
-        coins.add(new CoinItem("BTC", 2000.12, "3.64"));
-        CoinAdapter adapter = new CoinAdapter(this, coins);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        setBackgroundText("Loading...");
+
+        coins = new ArrayList<>();
+        aggregateCoins();
     }
 
     @Override
@@ -51,5 +60,64 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
         return super.onTouchEvent(event);
+    }
+
+    private void setBackgroundText(String text) {
+        TextView backgroundText = findViewById(R.id.backgroundText);
+        backgroundText.setText(text);
+    }
+
+    private void drawCoinsUI() {
+        RecyclerView recyclerView = findViewById(R.id.coinRecycler);
+        CoinAdapter adapter = new CoinAdapter(this, coins);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    private void aggregateCoins() {
+        aggregateCoin("BTC");
+        aggregateCoin("XRP");
+        aggregateCoin("ETH");
+        aggregateCoin("XLM");
+        aggregateCoin("USDT");
+        aggregateCoin("BCH");
+        aggregateCoin("EOS");
+        aggregateCoin("LTC");
+        aggregateCoin("XMR");
+    }
+
+    private void aggregateCoin(final String ticker) {
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = "https://min-api.cryptocompare.com/data/pricemultifull?fsyms=" + ticker + "&tsyms=USD&api_key=6db320aa389652ff3c1fe760b03851b1861a7fe89d028f1a29a262fcb8fe2675";
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                parseCoinData(ticker, response);
+                drawCoinsUI();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                setBackgroundText("Failed to get coin data!");
+            }
+        });
+
+        queue.add(stringRequest);
+    }
+
+    private void parseCoinData(String ticker, String response) {
+        JSONParser parser = new JSONParser();
+        try {
+            JSONObject coinData = (JSONObject) parser.parse(response);
+            JSONObject display = (JSONObject) coinData.get("DISPLAY");
+            JSONObject tickerData = (JSONObject) display.get(ticker);
+            JSONObject usd = (JSONObject) tickerData.get("USD");
+            String price = ((String) usd.get("PRICE")).replaceAll(" ", "");
+            String percentChange = ((String) usd.get("CHANGEPCT24HOUR")) + "%";
+            coins.add(new CoinItem(ticker, price, percentChange));
+        } catch (Exception e) {
+            setBackgroundText("Failed to parse coin data!");
+        }
     }
 }
