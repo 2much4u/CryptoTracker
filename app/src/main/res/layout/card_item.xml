@@ -16,7 +16,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="#00000000" />
+        app:srcCompat="@android:color/background_light" />
 
     <ImageView
         android:id="@+id/gradient"
