@@ -79,11 +79,13 @@ public class MainActivity extends AppCompatActivity {
         aggregateCoin("XRP");
         aggregateCoin("ETH");
         aggregateCoin("XLM");
+        aggregateCoin("MITH");
         aggregateCoin("USDT");
         aggregateCoin("BCH");
         aggregateCoin("EOS");
         aggregateCoin("LTC");
         aggregateCoin("XMR");
+        aggregateCoin("DEX");
     }
 
     private void aggregateCoin(final String ticker) {
