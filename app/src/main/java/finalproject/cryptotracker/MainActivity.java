@@ -26,7 +26,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private float touchX1,touchX2;
-    private final int minSwipeDistance = 500;
+    private final int minSwipeDistance = 300;
     private List<CoinItem> coins;
 
     @Override
@@ -45,23 +45,6 @@ public class MainActivity extends AppCompatActivity {
         aggregateCoins();
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        switch(event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                touchX1 = event.getX();
-                break;
-            case MotionEvent.ACTION_UP:
-                touchX2 = event.getX();
-                float deltaX = touchX2 - touchX1;
-                if (Math.abs(deltaX) > minSwipeDistance) {
-                    startActivity(new Intent(MainActivity.this, NewsActivity.class));
-                }
-                break;
-        }
-        return super.onTouchEvent(event);
-    }
-
     private void setBackgroundText(String text) {
         TextView backgroundText = findViewById(R.id.backgroundText);
         backgroundText.setText(text);
@@ -72,6 +55,31 @@ public class MainActivity extends AppCompatActivity {
         CoinAdapter adapter = new CoinAdapter(this, coins);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        recyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+            @Override
+            public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+                switch(e.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        touchX1 = e.getX();
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        touchX2 = e.getX();
+                        float deltaX = touchX2 - touchX1;
+                        if (Math.abs(deltaX) > minSwipeDistance) {
+                            startActivity(new Intent(MainActivity.this, NewsActivity.class));
+                        }
+                        break;
+                }
+                return false;
+            }
+
+            @Override
+            public void onTouchEvent(RecyclerView rv, MotionEvent e) {}
+
+            @Override
+            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {}
+        });
     }
 
     private void aggregateCoins() {

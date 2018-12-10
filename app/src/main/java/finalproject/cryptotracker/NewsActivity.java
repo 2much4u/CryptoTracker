@@ -7,7 +7,7 @@ import android.view.MotionEvent;
 
 public class NewsActivity extends AppCompatActivity {
     private float touchX1,touchX2;
-    private final int minSwipeDistance = 500;
+    private final int minSwipeDistance = 300;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
