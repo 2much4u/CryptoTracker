@@ -7,7 +7,7 @@ import android.view.MotionEvent;
 
 public class NewsActivity extends AppCompatActivity {
     private float touchX1,touchX2;
-    private final int minSwipeDistance = 1000;
+    private final int minSwipeDistance = 500;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +25,6 @@ public class NewsActivity extends AppCompatActivity {
                 touchX2 = event.getX();
                 float deltaX = touchX2 - touchX1;
                 if (Math.abs(deltaX) > minSwipeDistance) {
-                    Bundle bundle = new Bundle();
                     startActivity(new Intent(NewsActivity.this, MainActivity.class));
                 }
                 break;

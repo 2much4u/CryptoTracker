@@ -7,7 +7,7 @@ import android.view.MotionEvent;
 
 public class MainActivity extends AppCompatActivity {
     private float touchX1,touchX2;
-    private final int minSwipeDistance = 1000;
+    private final int minSwipeDistance = 500;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
