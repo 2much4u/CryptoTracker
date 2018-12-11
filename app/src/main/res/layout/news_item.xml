@@ -7,6 +7,16 @@
     android:layout_height="100dp">
 
     <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:color/background_light" />
+
+    <ImageView
         android:id="@+id/newsBackground"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -23,7 +33,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="15dp"
         android:text="News Title"
-        android:textColor="#fff"
+        android:textColor="#000"
         android:textSize="18dp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -34,12 +44,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginBottom="15dp"
+        android:layout_marginBottom="5dp"
         android:text="News Source"
-        android:textColor="#fff"
+        android:textColor="#000"
         android:textSize="18dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
 
 </android.support.constraint.ConstraintLayout>
