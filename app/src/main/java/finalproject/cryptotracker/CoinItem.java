@@ -15,16 +15,8 @@ public class CoinItem {
         return ticker;
     }
 
-    public void setTicker(String ticker) {
-        this.ticker = ticker;
-    }
-
     public String getCurrentPrice() {
         return currentPrice;
-    }
-
-    public void setCurrentPrice(String currentPrice) {
-        this.currentPrice = currentPrice;
     }
 
     public String getPercentChange() {

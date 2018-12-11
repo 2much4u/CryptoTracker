@@ -13,12 +13,12 @@ import android.widget.TextView;
 import java.util.List;
 
 public class CoinAdapter extends RecyclerView.Adapter<CoinAdapter.viewHolder> {
-    Context context;
-    List<CoinItem> coins;
+    private Context context;
+    private List<CoinItem> coins;
 
-    public CoinAdapter(Context setContext, List<CoinItem> setCoins) {
-        this.context = setContext;
-        this.coins = setCoins;
+    public CoinAdapter(Context context, List<CoinItem> coins) {
+        this.context = context;
+        this.coins = coins;
     }
 
     @Override
