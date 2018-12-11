@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-public class CoinAdapter extends RecyclerView.Adapter<CoinAdapter.viewHolder> {
+public class CoinAdapter extends RecyclerView.Adapter<CoinAdapter.coinViewHolder> {
     private Context context;
     private List<CoinItem> coins;
 
@@ -22,14 +22,14 @@ public class CoinAdapter extends RecyclerView.Adapter<CoinAdapter.viewHolder> {
     }
 
     @Override
-    public viewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public coinViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.card_item, parent, false);
-        return new viewHolder(view);
+        return new coinViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(viewHolder holder, int position) {
+    public void onBindViewHolder(coinViewHolder holder, int position) {
         CoinItem coin = coins.get(position);
         holder.coinTicker.setText(coin.getTicker());
         holder.coinValue.setText(coin.getCurrentPrice());
@@ -52,13 +52,13 @@ public class CoinAdapter extends RecyclerView.Adapter<CoinAdapter.viewHolder> {
         return coins.size();
     }
 
-    public class viewHolder extends RecyclerView.ViewHolder {
+    public class coinViewHolder extends RecyclerView.ViewHolder {
         private ImageView coinPicture;
         private TextView coinTicker;
         private TextView coinValue;
         private TextView percentChange;
 
-        public viewHolder(View itemView) {
+        public coinViewHolder(View itemView) {
             super(itemView);
             coinPicture = itemView.findViewById(R.id.coinPicture);
             coinTicker = itemView.findViewById(R.id.coinTicker);
