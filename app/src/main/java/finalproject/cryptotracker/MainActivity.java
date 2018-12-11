@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
 
-        setBackgroundText("Loading...");
+        setBackgroundText("Loading coins...");
 
         coins = new ArrayList<>();
         aggregateCoins();
